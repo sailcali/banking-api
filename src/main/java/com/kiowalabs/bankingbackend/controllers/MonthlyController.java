@@ -21,7 +21,7 @@ public class MonthlyController {
     MonthliesRepository monthliesRepository;
 
     @GetMapping("/monthly-expenses")
-    public ResponseEntity<List<MonthlyExpenses>> getAllAnnuals(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<MonthlyExpenses>> getAllMonthlies(@RequestParam(required = false) String name) {
         try {
             List<MonthlyExpenses> monthlies = new ArrayList<MonthlyExpenses>();
             if (name == null)
@@ -61,9 +61,9 @@ public class MonthlyController {
 
     @PutMapping("/monthly-expenses/{id}")
     public ResponseEntity<MonthlyExpenses> updateMonthly(@PathVariable("id") long id, @RequestBody MonthlyExpenses monthly) {
-        Optional<MonthlyExpenses> annualData = monthliesRepository.findById(id);
-        if (annualData.isPresent()) {
-            MonthlyExpenses _monthly = annualData.get();
+        Optional<MonthlyExpenses> monthlyData = monthliesRepository.findById(id);
+        if (monthlyData.isPresent()) {
+            MonthlyExpenses _monthly = monthlyData.get();
             _monthly.setName(monthly.getName());
             _monthly.setAmount(monthly.getAmount());
             _monthly.setDueDay(monthly.getDueDay());

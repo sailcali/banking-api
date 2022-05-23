@@ -63,7 +63,7 @@ public class MonthlyExpenses {
 
     @Override
     public String toString() {
-        return "Annual Expense [id=" + id + ", name=" + name + ", amount=" + amount +
+        return "Monthly Expense [id=" + id + ", name=" + name + ", amount=" + amount +
                 ", due on day=" + dueDay + ", remarks=" + remarks +"]";
     }
 }
