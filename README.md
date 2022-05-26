@@ -15,3 +15,8 @@ Monthly Expenses
 - Post new monthly expense
 - Put update to monthly expense by ID
 - Delete monthly expense by ID
+
+MSC Payroll
+- Get payroll data for specific year
+- Post payroll data for specific roll
+- Put payroll data for specific roll

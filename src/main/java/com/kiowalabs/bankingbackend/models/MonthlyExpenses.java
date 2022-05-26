@@ -1,7 +1,6 @@
 package com.kiowalabs.bankingbackend.models;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
 @Table(name = "monthly_expenses")

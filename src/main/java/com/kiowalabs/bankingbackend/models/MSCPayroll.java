@@ -1,7 +1,7 @@
 package com.kiowalabs.bankingbackend.models;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "msc_payroll")
@@ -14,7 +14,7 @@ public class MSCPayroll {
     @Column(name = "year")
     private long year;
     @Column(name = "pay_date")
-    private Date payDate;
+    private LocalDate payDate;
     @Column(name = "net_pay")
     private float netPay;
     @Column(name = "gross_pay")
@@ -22,13 +22,14 @@ public class MSCPayroll {
 
     public MSCPayroll() {
     }
-    public MSCPayroll(byte cpr, long year, Date payDate, float netPay, float grossPay) {
+    public MSCPayroll(byte cpr, long year, LocalDate payDate, float netPay, float grossPay) {
         this.cpr = cpr;
         this.year = year;
         this.payDate = payDate;
         this.netPay = netPay;
         this.grossPay = grossPay;
     }
+
     public long getId() {
         return id;
     }
@@ -44,10 +45,10 @@ public class MSCPayroll {
     public void setYear(long year) {
         this.year = year;
     }
-    public Date getPayDate() {
+    public LocalDate getPayDate() {
         return payDate;
     }
-    public void setPayDate(Date payDate) {
+    public void setPayDate(LocalDate payDate) {
         this.payDate = payDate;
     }
     public float getNetPay() { return netPay; }

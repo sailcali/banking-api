@@ -1,7 +1,7 @@
 package com.kiowalabs.bankingbackend.models;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "annual_expenses")
@@ -14,7 +14,7 @@ public class AnnualExpenses {
     @Column(name = "amount")
     private float amount;
     @Column(name = "due_date")
-    private Date dueDate;
+    private LocalDate dueDate;
     @Column(name = "essential")
     private boolean essential;
     @Column(name = "autopay_bank")
@@ -26,7 +26,7 @@ public class AnnualExpenses {
 
     public AnnualExpenses() {
     }
-    public AnnualExpenses(String name, float amount, Date dueDate, boolean essential,
+    public AnnualExpenses(String name, float amount, LocalDate dueDate, boolean essential,
                           String autopayBank, short period, String remarks) {
         this.name = name;
         this.amount = amount;
@@ -57,8 +57,8 @@ public class AnnualExpenses {
     public void setEssential(boolean isEssential) {
         this.essential = isEssential;
     }
-    public Date getDueDate() { return dueDate; }
-    public void setDueDate(Date dueDate) { this.dueDate = dueDate; }
+    public LocalDate getDueDate() { return dueDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
     public String getAutopayBank() { return autopayBank; }
     public void setAutopayBank(String autopayBank) { this.autopayBank = autopayBank;}
     public short getPeriod() { return period; }

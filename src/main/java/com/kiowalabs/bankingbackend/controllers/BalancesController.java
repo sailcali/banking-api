@@ -1,9 +1,8 @@
 package com.kiowalabs.bankingbackend.controllers;
 
 
-import com.kiowalabs.bankingbackend.models.MSCPayroll;
-import com.kiowalabs.bankingbackend.models.MonthlyExpenses;
-import com.kiowalabs.bankingbackend.repositories.MSCPayrollRepository;
+import com.kiowalabs.bankingbackend.models.BankBalances;
+import com.kiowalabs.bankingbackend.repositories.BalancesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/banking-api/")
-public class MSCPayrollController {
+public class BalancesController {
     @Autowired
-    MSCPayrollRepository mscPayrollRepository;
+    BalancesRepository balancesRepository;
 
 //    @GetMapping("/msc-payroll")
 //    public ResponseEntity<List<MonthlyExpenses>> getAllMSCPayroll(@RequestParam(required = false) String name) {
@@ -37,46 +36,44 @@ public class MSCPayrollController {
 //        }
 //    }
 
-    @GetMapping("/msc-payroll/{year}")
-    public ResponseEntity<List<MSCPayroll>> getPayrollByYear(@PathVariable("year") long year) {
-        List<MSCPayroll> payroll = new ArrayList<MSCPayroll>();
-        mscPayrollRepository.findByYear(year).forEach(payroll::add);
-        if (payroll.isEmpty()) {
+    @GetMapping("/bank-balances")
+    public ResponseEntity<BankBalances> getRecentBalances() {
+        List<BankBalances> balances = balancesRepository.findTopByOrderByIdDesc();
+        if (balances.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(payroll, HttpStatus.OK);
+            return new ResponseEntity<>(balances.get(0), HttpStatus.OK);
         }
     }
 
-    @PostMapping("/msc-payroll")
-    public ResponseEntity<MSCPayroll> addMSCPayroll(@RequestBody MSCPayroll payroll) {
+    @PostMapping("/bank-balances")
+    public ResponseEntity<BankBalances> addBalances(@RequestBody BankBalances balances) {
         try {
-
-            MSCPayroll _payroll = mscPayrollRepository
-                    .save(new MSCPayroll(payroll.getCpr(), payroll.getYear(), payroll.getPayDate(), payroll.getNetPay(),
-                            payroll.getGrossPay()));
-            return new ResponseEntity<>(_payroll, HttpStatus.CREATED);
+            BankBalances _balances = balancesRepository
+                    .save(new BankBalances(balances.getAmex(), balances.getNfcu(), balances.getCoinbase(),
+                            balances.getChaseMortgage(), balances.getDate()));
+            return new ResponseEntity<>(_balances, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    @PutMapping("/msc-payroll/{id}")
-    public ResponseEntity<MSCPayroll> updatePayroll(@PathVariable("id") long id, @RequestBody MSCPayroll payroll) {
-        Optional<MSCPayroll> payrollData = mscPayrollRepository.findById(id);
-        if (payrollData.isPresent()) {
-            MSCPayroll _payroll = payrollData.get();
-            _payroll.setCpr(payroll.getCpr());
-            _payroll.setYear(payroll.getYear());
-            _payroll.setPayDate(payroll.getPayDate());
-            _payroll.setNetPay(payroll.getNetPay());
-            _payroll.setGrossPay(payroll.getGrossPay());
-            return new ResponseEntity<>(mscPayrollRepository.save(_payroll), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @PutMapping("/msc-payroll/{id}")
+//    public ResponseEntity<MSCPayroll> updatePayroll(@PathVariable("id") long id, @RequestBody MSCPayroll payroll) {
+//        Optional<MSCPayroll> payrollData = mscPayrollRepository.findById(id);
+//        if (payrollData.isPresent()) {
+//            MSCPayroll _payroll = payrollData.get();
+//            _payroll.setCpr(payroll.getCpr());
+//            _payroll.setYear(payroll.getYear());
+//            _payroll.setPayDate(payroll.getPayDate());
+//            _payroll.setNetPay(payroll.getNetPay());
+//            _payroll.setGrossPay(payroll.getGrossPay());
+//            return new ResponseEntity<>(mscPayrollRepository.save(_payroll), HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 }
 //    @DeleteMapping("/monthly-expenses/{id}")
 //    public ResponseEntity<HttpStatus> deletePayroll(@PathVariable("id") long id) {
