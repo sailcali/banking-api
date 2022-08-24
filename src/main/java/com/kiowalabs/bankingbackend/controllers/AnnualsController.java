@@ -32,9 +32,9 @@ public class AnnualsController {
         try {
             List<AnnualExpenses> annuals = new ArrayList<AnnualExpenses>();
             if (name == null)
-                annualsRepository.findAll().forEach(annuals::add);
+                annuals.addAll(annualsRepository.findAll());
             else
-                annualsRepository.findByNameContaining(name).forEach(annuals::add);
+                annuals.addAll(annualsRepository.findByNameContaining(name));
             if (annuals.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }

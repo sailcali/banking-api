@@ -12,8 +12,5 @@ public class BankingBackendApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(BankingBackendApplication.class);
 	}
-	public static void main(String[] args) {
-		SpringApplication.run(BankingBackendApplication.class, args);
-	}
-
+	public static void main(String[] args) {SpringApplication.run(BankingBackendApplication.class, args);}
 }
